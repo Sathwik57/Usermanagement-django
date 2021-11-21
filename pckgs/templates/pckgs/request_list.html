@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+{% block content %}
+<br>
+<br>
+
+<div class="row" style="margin-left: 140px;">
+    <div class="col-6">
+        <h5>Leave Requests</h5>
+        {% for req in user.raised_by1.all%}
+        <div class="col-4" style="border: groove; width: 250px; height: 200px;padding: 10px ;">
+            <h5>{{req.leave_type}}</h5>
+            <label>From: {{req.start_date|date:"d M Y"}}</label> 
+            <label>To: {{req.end_date|date:"d M Y"}}</label>
+            <br>
+            <br>
+            {% if req.is_approved%}
+            <p>Status: <strong>Approved</strong></p>
+            {% elif req.is_cancelled %}
+            <label>Status: <strong>Rejected</strong></label>
+            {% else%}
+            <p>Status: <strong>Pending</strong></p>
+            {% endif %}
+            <label>Approver: <strong>{{req.approver}}</strong></label>
+        </div>
+        {% endfor%}
+    </div>
+    
+    <div class="col-6">
+        <h5>Software Requests</h5>
+        {% for req in user.raised_by2.all%}
+    <div class="col-4" style="border: groove;  width: 250px; height: 200px;padding: 10px">
+        <h5>Software Req</h5>
+        <label>Raised for: {{req.name}}</label> 
+    <label>Verion:{{req.version_name}}</label>
+        <br>
+        <br>
+        {% if req.is_approved%}
+        <p>Status: <strong>Approved</strong></p>
+        {% elif req.is_cancelled %}
+        <label>Status: <strong>Rejected</strong></label>
+        {% else%}
+        <p>Status: <strong>Pending</strong></p>
+        {% endif %}
+        <label>Approver: <strong>{{req.approver}}</strong></label>
+    </div>
+    {% endfor%}
+</div>
+
+{% endblock content %}

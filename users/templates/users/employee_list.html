@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<hr />
+{% if request.path == '/manager/'%}
+<h3 class="text-dark" style="padding-top: 10px ;padding-bottom: 10px ;">
+    Managers
+</h3>
+{% else%}
+<h3 class="text-dark" style="padding-top: 10px ;padding-bottom: 10px ;">
+    Employees
+</h3>
+<a class="text-secondary" href="{% url 'employee-add'%}">Add New Employee</a>
+{% endif %}
+<hr />
+<div class="container">
+    <div class="row">
+        {% for emp in employee %}
+        <div class="col-md" style="border: groove; margin-left: 30px;">
+            <p>{{emp}}</p>
+            <a href="{% url 'employee' emp.id%}">Details</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

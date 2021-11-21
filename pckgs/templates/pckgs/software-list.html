@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+{% load filltags%}
+{% block content %}
+<hr />
+<h3 class="text-dark" style="padding-top: 10px ;padding-bottom: 10px ;">
+    Softwares
+</h3>
+<a href="{% url 'software-add' %}" class='nav-link' style="padding-bottom:0px ;padding-top: 0px;">Add new Software</a>
+<hr />
+<div class="container">
+
+    {% for softwares in itemlist %}
+    <div class="row">
+    {% if  softwares %}
+
+        {% for x in softwares %}        
+        <div class="col-3" style="border: groove; padding: 5px 5px 10px 5px ; margin: 5px; ">
+            <h6>{{x.name}}</h6>
+    
+            {% for i in x.version_set.all %} 
+            <ul>
+                <li>{{i}}</li>
+            </ul>
+            {% endfor%}
+            <a href="{% url 'version-add' x.id %}" >Add Version</a>
+        </div>
+        
+        {% endfor %}
+        <hr>
+    </div>
+    {% endif %}
+
+    {% endfor %}
+</div>
+{% endblock content %}

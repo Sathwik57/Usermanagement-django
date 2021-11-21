@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load filltags %}
+{% block content %}
+
+<div class="container" style="padding-top: 30px;">
+
+    <h4 style="margin-left: 900px;">{{user}}</h4>
+    <label class="nav-link" style="margin-left: 900px;" href="#">Edit Profile</label>
+
+    <div class="avatar" style="text-align: center;">
+        <img src="{{user.profile_image.url}}" class="img">
+    </div>
+
+    <h6> Skills:</h6>
+    <p>
+        {% if profile.skill_set %}
+        {% for skill in profile.skill_set %}
+        <label class='skill'>{{skill}}</label>
+        {% endfor %}
+        {% else %}
+        <label>Not Declared</label>
+        {% endif %}
+    </p>
+
+    <h6> Intro:</h6>
+    {% if profile.intro%}
+    <p>{{profile.intro}}</p>
+    {% else %}
+    <p>Am an enthuastic Developer and Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum <br>has been the industry's standard dummy text ever since the 1500s,
+        when an unknown printer took a galley of type and <br>scrambled it to make a type specimen book</p>
+    {% endif %}
+    <h6> Project Field:</h6>
+    {% if role %}
+    <label>{{profile.project}} (Manager)</label>
+    {% else %}
+    <label>{{profile.reporting_manager.project}}</label>
+    {% endif %}
+    
+    
+        <label style="margin-left: 350px;"><h6> Date Joined &Experience:</h6></label>
+    </label>
+    <label>{{user.date_joined|date:"d M n Y"|fil}}</label>
+
+</div>
+
+{% endblock content %}

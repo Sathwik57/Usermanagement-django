@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div >
+<h3 style="text-align: center; margin-top: 90px;margin-bottom: 20px;" class="text-dark">Login</h3>
+<div class="container" style="width: 30%;border: groove;padding: 10px 20px 20px 20px;  ">
+<p class="text-secondary" style="text-align: center;">Please Login to access</p>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <!-- <p> -->
+    <label class="form-label">{{field.label}}</label>
+<!-- </p> -->
+    {{field}}
+    <br>
+    {% endfor %}
+    {% if form.errors%}
+    {% for error in form.errors%}
+    <!-- {{error}} -->
+    {% endfor %}
+    {% endif %}
+    <p style="margin-top: 0px;">
+    <button type="submit" class="btn btn-secondary"  style="margin-left: 180px; margin-top: 10px;">Login</button>
+</p>
+</form>
+<a href="{% url 'reset_password'%}">Forgot Password..Reset</a>
+</div>
+</div>
+{% endblock content %}

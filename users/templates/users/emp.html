@@ -1,0 +1,68 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load filltags%}
+{% block content %}
+
+<div class="container" style="padding-top: 30px;">
+    <h4 style="margin-left: 900px;">{{employee}}</h4>
+    <label style="margin-left: 900px;" href="#">Email : {{employee.user.email}}</label>
+    {% if employee.reporting_manager %}
+    <label style="margin-left: 900px;" href="#">Reports to : {{employee.reporting_manager}}</label>
+    {% else %}
+    <label style="margin-left: 700px;" href="#">Reports to : Vicky</label>
+    {% endif %}
+
+    <div class="avatar" style="text-align: center;">
+        <img src="{{employee.user.profile_image.url}}" class="img">
+        {% if employee.reporting_manager %}
+            <a href="{% url 'employee-delete' employee.id%}">Delete</a>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+
+    <h6> Skills:</h6>
+    <p>
+    {% if employee.skill_set %}
+        {% for skill in employee.skill_set %}
+        <label class='skill'>{{skill}}</label>
+        {% endfor %}
+    {% else %}
+    <label>Not Declared</label>
+    {% endif %}
+    </p>
+    <!-- <br> -->
+
+    <h6> Intro:</h6>
+    {% if employee.intro%}
+    <p>{{employee.intro}}</p>
+    {% else %}
+    <p>Am an enthuastic Developer and Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+        Lorem Ipsum <br>has been the industry's standard dummy text ever since the 1500s,
+     when an unknown printer took a galley of type and <br>scrambled it to make a type specimen book</p>
+    {% endif %}
+    <h6> Project Field:</h6>
+    {% if employee.reporting_manager %}
+    <label>{{employee.reporting_manager.project}}</label>
+    {% else %}
+    <label style="margin-left: 260px;">{{employee.project}}</label>
+    {% endif %}
+</div>
+<label style="margin-left: 380px;"><h6> Date Joined &Experience:</h6></label>
+</label>
+<label>{{employee.user.date_joined|date:"d M n Y"|fil}}</label>
+<br>
+<br>
+<h6 style="padding-left: 50px;">Current Softwares :</h6>
+<div class = 'row'>
+    {% if employee.user.raised_by1 %}
+    {% for req in employee.user.raised_by2.all %}
+    <div class = 'col-3' style="border: groove; margin-left: 30px;">
+        <p> {{req.name}}</p> 
+    <label>Version:{{req.version_name}}</label>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</div>
+{% endblock content %}

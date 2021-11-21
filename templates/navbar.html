@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}" style="padding-left: 80px;">Crazy Tech</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="padding-right: 100px;">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_manager  %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'employee-list'%}">Employee</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'view-approvals'%}">Approvals</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'view-request'%}">Requests</a>
+                        </li>
+                    {% elif  request.user.is_superuser%}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'managers-list'%}">Managers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'employee-list'%}">Employee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'view-approvals'%}">Approvals</a>
+                    </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'view-request'%}">Requests</a>
+                        </li>
+                    {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'profile' %}" style="border: groove thin;">Logged in
+                        as:{{request.user.username}}</a>
+                </li>
+
+                <li class="nav-item">
+                    <button class="btn btn-dark" style="margin-left: 10px;">
+                        <a class='text-secondary' href="{% url 'logout'%}">Logout</a>
+                    </button>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <button class="btn btn-dark" style="margin-left: 10px;">
+                        <a class='text-secondary' href="{% url 'login'%}">Login</a>
+                    </button>       
+                </li>
+                {% endif %}
+            </ul>
+            <!-- <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form> -->
+        </div>
+    </div>
+</nav>

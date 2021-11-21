@@ -1,0 +1,15 @@
+.avatar {
+    float: left;
+    width: 20%;
+    /* border-radius: 0%; */
+}
+.img {
+    /* float: left; */
+    width: 90%;
+    border-radius: 0%;
+}
+
+.skill {
+    border-radius: 0%;
+    background-color: lightblue;
+}
