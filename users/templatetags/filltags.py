@@ -19,3 +19,13 @@ def fil(value):
     months = (delta % 365)//30
     a.pop(2)
     return ' '.join(i for i in a) + f'({year}yrs {months}months)'
+
+@register.filter
+def req_count(user):
+    l , c =[] , 0
+    l += user.approver2.all()
+    l += user.approver1.all()
+    for req in l : 
+        if not req.is_closed:
+            c += 1
+    return c if c != 0 else None

@@ -57,10 +57,12 @@
 <div class = 'row'>
     {% if employee.user.raised_by1 %}
     {% for req in employee.user.raised_by2.all %}
+    {% if req.is_approved %}
     <div class = 'col-3' style="border: groove; margin-left: 30px;">
         <p> {{req.name}}</p> 
     <label>Version:{{req.version_name}}</label>
     </div>
+    {% endif %}
     {% endfor %}
     {% endif %}
 

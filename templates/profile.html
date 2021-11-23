@@ -6,6 +6,7 @@
 <div class="container" style="padding-top: 30px;">
 
     <h4 style="margin-left: 900px;">{{user}}</h4>
+    <label style="margin-left: 900px;">Email: {{profile.user.email}}</label>
     <label class="nav-link" style="margin-left: 900px;" href="#">Edit Profile</label>
 
     <div class="avatar" style="text-align: center;">
@@ -42,7 +43,7 @@
         <label style="margin-left: 350px;"><h6> Date Joined &Experience:</h6></label>
     </label>
     <label>{{user.date_joined|date:"d M n Y"|fil}}</label>
-
+    <label><strong>Prev Experience:</strong> {{profile.experience}} yrs</label>
 </div>
 
 {% endblock content %}

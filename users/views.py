@@ -5,11 +5,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin,AccessMixin
 from django.contrib.auth.views import LoginView   
 from django.views.generic import ListView,TemplateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse
 from pckgs.mixins import SuperOwnerMixin
 
-from users.forms import EmpolyeeAddForm, LoginForm
+from users.forms import EmpolyeeAddForm, LoginForm, UpdateEmpForm, UpdateMgrForm
 from users.utils import generate_link
 from .models import *
 from django.conf import settings
@@ -42,7 +42,8 @@ class EmployeeDetails(LoginRequiredMixin,DetailView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            return ProManager.objects.all()
+            if self.request.path.split('/')[1] != 'employee':
+                return ProManager.objects.all()
         return Employee.objects.all()
         # return emp
 
@@ -74,18 +75,27 @@ class AddEmployee(LoginRequiredMixin,CreateView):
                 reporting_manager = ProManager.objects.get(user = self.request.user)
             )
         link = generate_link(temp,self.request)
+        print(settings.EMAIL_HOST_USER,temp.email)
         send_mail(
             subject='Recruited to Crazy Tech!!',
             message = f"""Welcome to Crazy Tech!.. Please click below link to reset password and login 
             link: {link}
             User id : {temp.username}""",
-            from_email='test@django.com',
+            from_email= settings.EMAIL_HOST_USER,
             recipient_list=[temp.email]
         )
 
 
         return super().form_valid(form)
+
+class UpdateEmployee(LoginRequiredMixin,UpdateView):
     
+    def get_form_class(self) :
+        return UpdateEmpForm if self.request.user.is_employee else UpdateMgrForm
+
+    def get_queryset(self) :
+        return Employee.objects.all() if self.request.user.is_employee else ProManager.objects.all()
+
 class DelEmployee(LoginRequiredMixin,DeleteView):
     template_name = 'users/employee_delete.html'
     queryset = Employee.objects.all()
@@ -94,13 +104,11 @@ class DelEmployee(LoginRequiredMixin,DeleteView):
         print(self.object)
         return reverse('employee-list')
 
-
 class Login(LoginView):
     template_name = 'loginform.html'
     form_class = LoginForm
     redirect_authenticated_user = True
     # success_url = reverse('home')
-
 
 class Profile(LoginRequiredMixin,SuperOwnerMixin,TemplateView):
     template_name = 'profile.html'

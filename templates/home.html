@@ -1,5 +1,7 @@
 {%extends 'base.html'%}
 
 {% block content %}
-<h3>Welcome {{request.user}}</h3>
+{% if request.user.is_authenticated %}
+<h3 style="text-align: center;">Welcome {{request.user}}</h3>
+{% endif %}
 {% endblock content%}

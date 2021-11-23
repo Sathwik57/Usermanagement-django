@@ -1,3 +1,4 @@
+{% load filltags %}
 <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home' %}" style="padding-left: 80px;">Crazy Tech</a>
@@ -18,7 +19,11 @@
                             <a class="nav-link active" href="{% url 'employee-list'%}">Employee</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'view-approvals'%}">Approvals</a>
+                            <a class="nav-link active" href="{% url 'view-approvals'%}">Approvals
+                                {% if request.user|req_count %}
+                                ({{request.user|req_count}})
+                                {% endif %}
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="{% url 'view-request'%}">Requests</a>

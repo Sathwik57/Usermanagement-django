@@ -72,12 +72,15 @@ class RaiseReq(LoginRequiredMixin,SuperOwnerMixin, CreateView):
 
     def form_valid(self, form ):
         self.user = self.request.user
+        print(self.user, self.user.employee.reporting_manager)
         temp = form.save(commit = False)
         temp.raised_by = self.user
         try:
-            temp.approver = self.user.employee.reporting_manager
+            temp.approver = self.user.employee.reporting_manager.user
+            print(1)
         except :
-            temp.approver = User.objects.get(is_superuser = True)                
+            temp.approver = User.objects.get(is_superuser = True)  
+            print(2)              
         return super().form_valid(form)
 
     def post(self, request, *args: str, **kwargs):

@@ -7,7 +7,8 @@
     <div class="col-6">
         <h5>Leave Requests</h5>
         {% for req in user.approver1.all%}
-        <div class="col-4" style="border: groove; width: 250px; height: 260px;padding: 10px ;">
+        <div class="col-4" style="border: groove;  width: 260px; height: 300px;
+        padding-left: 10px; margin-bottom: 10px;">
             <h5>{{req.leave_type}}</h5>
             <label>From: {{req.start_date|date:"d M Y"}}</label>
             <label>To: {{req.end_date|date:"d M Y"}}</label>
@@ -36,7 +37,8 @@
     <div class="col-6">
         <h5>Software Requests</h5>
         {% for req in user.approver2.all%}
-        <div class="col-4" style="border: groove;  width: 250px; height: 260px;padding: 10px">
+        <div class="col-4" style="border: groove;  width: 260px; height: 300px;
+        padding-left: 10px; margin-bottom: 10px;">
             <h5>Software Req</h5>
             <label>Raised for: {{req.name}}</label>
             <label>Verion:{{req.version_name}}</label>
@@ -50,7 +52,7 @@
             {% else%}
             <p>Status: <strong>Pending</strong></p>
             {% endif %}
-            <p>Raised By: <strong>{{req.raised_by}}</p>
+            <p>Raised By: <strong>{{req.raised_by}}</strong></p>
             </label>
 
             {% if not req.is_closed %}
