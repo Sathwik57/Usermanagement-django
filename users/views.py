@@ -89,19 +89,21 @@ class AddEmployee(LoginRequiredMixin,CreateView):
         return super().form_valid(form)
 
 class UpdateEmployee(LoginRequiredMixin,UpdateView):
-    
+    template_name = 'users/employee_update.html'
     def get_form_class(self) :
         return UpdateEmpForm if self.request.user.is_employee else UpdateMgrForm
 
     def get_queryset(self) :
         return Employee.objects.all() if self.request.user.is_employee else ProManager.objects.all()
 
+    def get_success_url(self):
+        return reverse('profile')
+
 class DelEmployee(LoginRequiredMixin,DeleteView):
     template_name = 'users/employee_delete.html'
     queryset = Employee.objects.all()
 
     def get_success_url(self):
-        print(self.object)
         return reverse('employee-list')
 
 class Login(LoginView):

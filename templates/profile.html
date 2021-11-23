@@ -7,7 +7,8 @@
 
     <h4 style="margin-left: 900px;">{{user}}</h4>
     <label style="margin-left: 900px;">Email: {{profile.user.email}}</label>
-    <label class="nav-link" style="margin-left: 900px;" href="#">Edit Profile</label>
+    <label class="nav-link" style="margin-left: 900px;">
+        <a href ="{% url 'update-user' profile.id%}">Edit Profile</a></label>
 
     <div class="avatar" style="text-align: center;">
         <img src="{{user.profile_image.url}}" class="img">
